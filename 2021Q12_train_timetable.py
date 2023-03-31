@@ -1,7 +1,6 @@
-# 6/10 score
 n = int(input())
 t = int(input())
-d = {}
+d = []
 for _ in range(t):
     a, b, st, en = input().split()
     a = int(a)
@@ -9,25 +8,15 @@ for _ in range(t):
     st = int(st[:2])*60+int(st[3:])
     en = int(en[:2])*60+int(en[3:])
     if st >= 5*60:
-        if a in d:
-            d[a].append([b, st, en])
-        else:
-            d[a] = [[b, st, en]]
-
-queue = [[1, 5*60]]
-shortest = 100000000
-while queue:
-    cur, time = queue.pop(0)
-    if time > shortest:
-        continue
-    if cur == n:
-        shortest = min(shortest, time)
-        continue
-    time += 3
-    if cur in d:
-        for c in d[cur]:
-            if c[1] >= time and c[2] < shortest:
-                queue.append([c[0], c[2]])
+        d.append([a, b, st ,en])
+d.sort()
+dp = [99999 for i in range(n+1)]
+dp[1] = 4*60+57
+for i in d:
+    a, b, st, en = i
+    if dp[a] <= st-3:
+        dp[b] = min(dp[b], en)
+shortest = dp[n]
 hours = str(shortest // 60)
 shortest %= 60
 shortest = str(shortest)

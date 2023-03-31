@@ -1,3 +1,4 @@
+# 6/10 score
 n = int(input())
 t = int(input())
 d = {}
